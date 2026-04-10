@@ -1,0 +1,25 @@
+@use '@/app/styles/variables' as *;
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  color: $color-text;
+
+  &__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: #ffffff;
+  }
+
+  &__text {
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+}

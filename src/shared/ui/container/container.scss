@@ -1,0 +1,14 @@
+@use '@/app/styles/mixins' as *;
+
+.container {
+  width: min(100% - 48px, 1240px);
+  margin: 0 auto;
+
+  @include tablet {
+    width: min(100% - 32px, 100%);
+  }
+
+  @include mobile {
+    width: min(100% - 24px, 100%);
+  }
+}

@@ -1,0 +1,39 @@
+@use '@/app/styles/mixins' as *;
+
+.world {
+  padding: 48px 0 0;
+
+  &__container {
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 30px;
+    font-weight: 500;
+    color: #000000;
+    padding-bottom: 16px;
+  }
+
+  &__description {
+    padding-bottom: 16px;
+    margin-top: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1C1C1E;
+  }
+
+  &__map {
+    display: block;
+    width: min(100%, 1060px);
+    margin: 42px auto 0;
+    height: auto;
+  }
+
+  @include mobile {
+    padding-top: 32px;
+
+    &__title {
+      font-size: 16px;
+    }
+  }
+}

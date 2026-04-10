@@ -1,0 +1,90 @@
+@use '@/app/styles/variables' as *;
+@use '@/app/styles/mixins' as *;
+
+.header {
+  padding: 10px 0 0;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  &__logo {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    color: #B4387A;
+  }
+
+  &__navigation {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__navigation-list {
+    display: flex;
+    align-items: center;
+    gap: 44px;
+  }
+
+  &__navigation-link {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1D1929;
+  }
+   &__navigation-link:hover {
+    color: #B4387A;
+   }
+
+  &__button.button {
+    min-height: 42px;
+    padding: 10px 20px;
+    border-radius: 14px;
+    font-size: 16px;
+    box-shadow: 0 9px 20px #003CFF;
+  }
+
+  @include tablet {
+    padding-top: 18px;
+
+    &__container {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    &__navigation {
+      order: 3;
+      flex: 0 0 100%;
+    }
+
+    &__navigation-list {
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  @include mobile {
+    &__container {
+      gap: 14px;
+    }
+
+
+    &__navigation-list {
+      gap: 14px 18px;
+    }
+
+    &__navigation-link {
+      font-size: 12px;
+    }
+
+    &__button.button {
+      min-height: 38px;
+      padding: 9px 16px;
+    }
+  }
+}

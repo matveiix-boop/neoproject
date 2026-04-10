@@ -1,0 +1,99 @@
+@use '@/app/styles/mixins' as *;
+
+.hero {
+  padding: 76px 0 0;
+
+  &__container {
+    display: grid;
+    grid-template-columns: minmax(320px, 600px) minmax(320px, 480px);
+    justify-content: space-between;
+    align-items: start;
+    gap: 40px;
+  }
+
+  &__title {
+    max-width: 600px;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 0.97;
+    letter-spacing: -0.03em;
+    color: #1d1d25;
+  }
+
+  &__button.button {
+    min-height: 40px;
+    margin-top: 34px;
+    padding: 10px 18px;
+    border-radius: 14px;
+    font-size: 12px;
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 14px;
+    padding-top: 6px;
+  }
+
+  &__card {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  &__card-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 1200px) {
+    &__title {
+      font-size: 56px;
+    }
+  }
+
+  @include tablet {
+    padding-top: 56px;
+
+    &__container {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+
+    &__content {
+      width: 100%;
+      text-align: center;
+    }
+
+    &__title {
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: 48px;
+    }
+
+    &__button.button {
+      margin-top: 24px;
+    }
+
+    &__cards {
+      width: min(100%, 520px);
+    }
+  }
+
+  @include mobile {
+    padding-top: 40px;
+
+    &__container {
+      gap: 28px;
+    }
+
+    &__title {
+      font-size: 34px;
+    }
+
+    &__cards {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+}

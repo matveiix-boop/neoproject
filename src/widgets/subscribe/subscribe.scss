@@ -1,0 +1,118 @@
+@use '@/app/styles/mixins' as *;
+
+.subscribe {
+  padding: 88px 0 0;
+  
+
+  &__container {
+    text-align: center;
+  }
+
+  &__label {
+    font-size: 24px;
+    font-weight: 700;
+    color: #EB801D;
+
+  }
+
+  &__title{ 
+    font-size: 30px;
+    font-weight: 700;
+    color: #1C1C1E;
+  }
+  &__subtitle {
+    font-size: 30px;
+    font-weight: 500;
+    color: #1C1C1E;
+  }
+
+  &__title {
+    margin-top: 30px;
+  }
+
+  &__subtitle {
+    margin-top: 30px;
+  }
+
+  &__form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: min(100%, 388px);
+    margin: 54px auto 0;
+    padding: 10px 12px 10px 16px;
+    border: 1px solid #ececf1;
+    border-radius: 18px;
+    background-color: #fafafa;
+    box-shadow: 0 10px 20px rgba(34, 35, 45, 0.04);
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+
+  &__field-icon {
+    width: 27.89px;
+    height: 37.43px;
+  }
+
+  &__input {
+    width: 100%;
+    font-size: 20px;
+    font-weight: 400;
+    color: #2c2d35;
+
+    &::placeholder {
+      color: #9092B0;
+    }
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    padding: 8px 16px 8px 12px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #6f7bff 0%, #5c60fb 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 18px rgba(84, 92, 251, 0.26);
+  }
+
+  &__button-icon {
+    width: 23.91px;
+    height: 26.04px;
+  }
+
+  &__button-text {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  @include mobile {
+    padding-top: 56px;
+
+    &__label {
+      font-size: 16px;
+    }
+
+    &__title,
+    &__subtitle {
+      font-size: 18px;
+    }
+
+    &__form {
+      flex-direction: column;
+      padding: 14px;
+    }
+
+    &__button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
