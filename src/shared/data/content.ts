@@ -25,19 +25,6 @@ export const featureItems = [
   { icon: checkIcon, label: 'Work anywhere in the world.' },
 ];
 
-export const exchangeRates = [
-  [
-    { code: 'USD', value: '60.78' },
-    { code: 'CNY', value: '9.08' },
-    { code: 'CHF', value: '64.78' },
-  ],
-  [
-    { code: 'EUR', value: '61.44' },
-    { code: 'JPY', value: '0.46' },
-    { code: 'GBP', value: '71.09' },
-  ],
-];
-
 export const courseCards = [
   {
     id: 'cashback',
