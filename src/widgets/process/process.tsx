@@ -10,9 +10,9 @@ export const Process = () => {
       <Container className="process__container">
         <div className="process__content">
           <SectionHeading
-            eyebrow="Как это работает"
-            title="Готовая семантическая основа для информационных блоков главной страницы"
-            description="Вместо монолитной верстки используется деление на изолированные секции. Это делает код чище и облегчает ревью в Pull Request."
+            eyebrow=""
+            title=""
+            description=""
           />
         </div>
 

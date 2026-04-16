@@ -39,7 +39,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 14px;
-    width: min(100%, 388px);
+    width: min(100%, 525px);
+    height:  90px;
     margin: 54px auto 0;
     padding: 10px 12px 10px 16px;
     border: 1px solid #ececf1;
@@ -52,7 +53,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    flex: 1;
+    padding-left: 12px;
   }
 
   &__field-icon {
@@ -74,18 +75,23 @@
   &__button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    min-height: 38px;
-    padding: 8px 16px 8px 12px;
-    border-radius: 999px;
+    min-width: 162px;
+    min-height: 45px;
+    padding: 0px 16px 0px 8px;
+    margin-right: 16px;
+    border-radius: 19px;
     background: linear-gradient(180deg, #6f7bff 0%, #5c60fb 100%);
     color: #ffffff;
     box-shadow: 0 10px 18px rgba(84, 92, 251, 0.26);
   }
 
   &__button-icon {
-    width: 23.91px;
-    height: 26.04px;
+    width: auto;
+    height: 40px;
+    flex-shrink: 0;
+    margin-right: 5px;
   }
 
   &__button-text {

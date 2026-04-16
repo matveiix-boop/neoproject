@@ -2,20 +2,20 @@
 
 .features {
   padding: 110px 0 0;
-  font-family: 'Rubik', sans-serif;
+  font-family: Rubik;
 
   &__container {
     display: grid;
-    grid-template-columns: minmax(360px, 500px) minmax(320px, 560px);
+    grid-template-columns: 34% 1fr;
     justify-content: space-between;
-    align-items: start;
-    column-gap: 52px;
+    align-items:center;
+    column-gap: 56px;
   }
 
   &__media {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
   }
 
   &__image {
@@ -27,13 +27,12 @@
   }
 
   &__content {
-    align-self: center;
-    max-width: 560px;
+     max-width: none;
   }
 
   &__title {
     margin: 0;
-    max-width: 560px;
+    max-width: none;
     font-size: 35px;
     font-weight: 500;
     line-height: 1.08;
@@ -75,8 +74,8 @@
 
   @media (max-width: 1200px) {
     &__container {
-      grid-template-columns: minmax(280px, 400px) minmax(320px, 1fr);
-      column-gap: 36px;
+      grid-template-columns: 32% 1fr;
+      column-gap: 40px;
     }
 
     &__image {

@@ -12,7 +12,6 @@ type CurrencyItem = {
 };
 
 const REFRESH_INTERVAL = 15 * 60 * 1000;
-
 const CURRENCIES: CurrencyCode[] = ['USD', 'CNY', 'CHF', 'EUR', 'JPY', 'GBP'];
 
 const formatRate = (value: number) => value.toFixed(2);
@@ -31,35 +30,41 @@ const splitIntoRows = <T,>(items: T[], size: number) => {
   return rows;
 };
 
+const formatUpdatedText = (date?: string) => {
+  if (!date) {
+    return 'Update every 15 minutes';
+  }
+
+  const [year, month, day] = date.split('-');
+
+  if (!year || !month || !day) {
+    return 'Update every 15 minutes';
+  }
+
+  return `Update every 15 minutes, MSC ${day}.${month}.${year}`;
+};
+
 export const Exchange = () => {
   const [rates, setRates] = useState<CurrencyItem[]>(
     CURRENCIES.map((code) => ({ code, value: 0 }))
   );
   const [updatedText, setUpdatedText] = useState('Update every 15 minutes');
-  const [status, setStatus] = useState('Loading exchange rates...');
-  const [isLoading, setIsLoading] = useState(false);
 
   const rows = useMemo(() => splitIntoRows(rates, 3), [rates]);
 
   const loadRates = useCallback(async () => {
     try {
-      setIsLoading(true);
-      setStatus('Loading exchange rates...');
-
-   const data = await getLatestRates('RUB', CURRENCIES);
-   const nextRates = CURRENCIES.map((code) => ({
-  code,
-  value: data.rates[code] ? 1 / data.rates[code] : 0,
-}));
+      const data = await getLatestRates('RUB', CURRENCIES);
+      const nextRates = CURRENCIES.map((code) => ({
+        code,
+        value: data.rates[code] ? 1 / data.rates[code] : 0,
+      }));
 
       setRates(nextRates);
-      setUpdatedText(`Update every 15 minutes, ${data.date ?? ''}`);
-      setStatus('Rates updated successfully.');
+      setUpdatedText(formatUpdatedText(data.date));
     } catch (error) {
       console.error(error);
-      setStatus('Failed to load exchange rates.');
-    } finally {
-      setIsLoading(false);
+      setUpdatedText('Update every 15 minutes');
     }
   }, []);
 
@@ -86,16 +91,14 @@ export const Exchange = () => {
 
           <p className="exchange__label">Currency</p>
 
-          <div className="exchange__content">
+          <div className="exchange__body">
             <div className="exchange__table">
               {rows.map((row, rowIndex) => (
                 <div className="exchange__row" key={rowIndex}>
                   {row.map((item) => (
                     <div className="exchange__cell" key={item.code}>
                       <span className="exchange__code">{item.code}:</span>
-                      <span className="exchange__value">
-                        {formatRate(item.value)}
-                      </span>
+                      <span className="exchange__value">{formatRate(item.value)}</span>
                     </div>
                   ))}
                 </div>

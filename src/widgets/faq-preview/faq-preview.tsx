@@ -10,8 +10,8 @@ export const FaqPreview = () => {
       <Container>
         <SectionHeading
           eyebrow="FAQ"
-          title="Частые вопросы по реализации тестового задания"
-          description="Блок можно заменить на аккордеон или карточки, если это предусмотрено в вашем макете."
+          title=""
+          description=""
         />
 
         <div className="faq-preview__list">

@@ -41,11 +41,10 @@
    }
 
   &__button.button {
-    min-height: 42px;
+    min-height: 50px;
     padding: 10px 20px;
     border-radius: 14px;
     font-size: 16px;
-    box-shadow: 0 9px 20px #003CFF;
   }
 
   @include tablet {

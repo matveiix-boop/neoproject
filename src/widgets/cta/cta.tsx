@@ -9,19 +9,18 @@ export const Cta = () => {
       <Container>
         <div className="cta__box">
           <div className="cta__content">
-            <span className="cta__eyebrow">Следующий шаг</span>
+            <span className="cta__eyebrow">0</span>
             <h2 className="cta__title" id="cta-title">
-              Замените демо-контент на данные из Figma и получите готовую главную страницу.
+              0
             </h2>
             <p className="cta__description">
-              В проекте нет блока «лента новостей», как и требуется в задании. Остальные секции можно
-              детализировать после получения скриншотов или публичного доступа к макету.
+              
             </p>
           </div>
 
           <div className="cta__actions">
-            <Button>Открыть проект</Button>
-            <Button variant="secondary">Посмотреть структуру</Button>
+            <Button>0</Button>
+            <Button variant="secondary">0</Button>
           </div>
         </div>
       </Container>
