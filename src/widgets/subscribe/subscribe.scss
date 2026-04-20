@@ -2,7 +2,6 @@
 
 .subscribe {
   padding: 88px 0 0;
-  
 
   &__container {
     text-align: center;
@@ -11,27 +10,21 @@
   &__label {
     font-size: 24px;
     font-weight: 700;
-    color: #EB801D;
-
-  }
-
-  &__title{ 
-    font-size: 30px;
-    font-weight: 700;
-    color: #1C1C1E;
-  }
-  &__subtitle {
-    font-size: 30px;
-    font-weight: 500;
-    color: #1C1C1E;
+    color: #eb801d;
   }
 
   &__title {
     margin-top: 30px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #1c1c1e;
   }
 
   &__subtitle {
     margin-top: 30px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #1c1c1e;
   }
 
   &__form {
@@ -40,7 +33,7 @@
     justify-content: space-between;
     gap: 14px;
     width: min(100%, 525px);
-    height:  90px;
+    height: 90px;
     margin: 54px auto 0;
     padding: 10px 12px 10px 16px;
     border: 1px solid #ececf1;
@@ -54,21 +47,25 @@
     align-items: center;
     gap: 10px;
     padding-left: 12px;
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   &__field-icon {
     width: 27.89px;
     height: 37.43px;
+    flex-shrink: 0;
   }
 
   &__input {
     width: 100%;
+    min-width: 0;
     font-size: 20px;
     font-weight: 400;
     color: #2c2d35;
 
     &::placeholder {
-      color: #9092B0;
+      color: #9092b0;
     }
   }
 
@@ -79,7 +76,7 @@
     gap: 8px;
     min-width: 162px;
     min-height: 45px;
-    padding: 0px 16px 0px 8px;
+    padding: 0 16px 0 8px;
     margin-right: 16px;
     border-radius: 19px;
     background: linear-gradient(180deg, #6f7bff 0%, #5c60fb 100%);
@@ -113,11 +110,25 @@
 
     &__form {
       flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+      height: auto;
       padding: 14px;
+    }
+
+    &__field {
+      width: 100%;
+      padding-left: 0;
+    }
+
+    &__input {
+      width: 100%;
     }
 
     &__button {
       width: 100%;
+      min-width: 0;
+      margin-right: 0;
       justify-content: center;
     }
   }

@@ -4,7 +4,10 @@ import arrowLeft from '@/shared/assets/images/arrow-left.svg';
 import arrowRight from '@/shared/assets/images/arrow-right.svg';
 import './news.scss';
 
-const SLIDE_STEP = 500;
+const DESKTOP_SLIDE_STEP = 500;
+const MOBILE_SLIDE_STEP = 250;
+const MOBILE_BREAKPOINT = 768;
+const EDGE_TOLERANCE = 8;
 
 export const News = () => {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
@@ -12,6 +15,7 @@ export const News = () => {
   const [error, setError] = useState<string | null>(null);
   const [offset, setOffset] = useState(0);
   const [maxOffset, setMaxOffset] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -35,8 +39,36 @@ export const News = () => {
     void loadNews();
   }, []);
 
+  useEffect(() => {
+    const updateViewportMode = () => {
+      setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
+    };
+
+    updateViewportMode();
+    window.addEventListener('resize', updateViewportMode);
+
+    return () => {
+      window.removeEventListener('resize', updateViewportMode);
+    };
+  }, []);
+
+  const syncMobileScrollState = (viewport: HTMLDivElement) => {
+    const rawMax = Math.max(viewport.scrollWidth - viewport.clientWidth, 0);
+    const rawLeft = viewport.scrollLeft;
+
+    const normalizedLeft =
+      rawLeft <= EDGE_TOLERANCE
+        ? 0
+        : rawLeft >= rawMax - EDGE_TOLERANCE
+          ? rawMax
+          : rawLeft;
+
+    setMaxOffset(rawMax);
+    setOffset(normalizedLeft);
+  };
+
   useLayoutEffect(() => {
-    const updateMaxOffset = () => {
+    const updateLimits = () => {
       const viewport = viewportRef.current;
       const track = trackRef.current;
 
@@ -44,16 +76,20 @@ export const News = () => {
         return;
       }
 
-      const nextMaxOffset = Math.max(track.scrollWidth - viewport.clientWidth, 0);
+      if (window.innerWidth <= MOBILE_BREAKPOINT) {
+        syncMobileScrollState(viewport);
+        return;
+      }
 
+      const nextMaxOffset = Math.max(track.scrollWidth - viewport.clientWidth, 0);
       setMaxOffset(nextMaxOffset);
       setOffset((prev) => Math.min(prev, nextMaxOffset));
     };
 
-    updateMaxOffset();
+    updateLimits();
 
     const resizeObserver = new ResizeObserver(() => {
-      updateMaxOffset();
+      updateLimits();
     });
 
     const viewportElement = viewportRef.current;
@@ -67,24 +103,96 @@ export const News = () => {
       resizeObserver.observe(trackElement);
     }
 
-    window.addEventListener('resize', updateMaxOffset);
+    window.addEventListener('resize', updateLimits);
 
     return () => {
       resizeObserver.disconnect();
-      window.removeEventListener('resize', updateMaxOffset);
+      window.removeEventListener('resize', updateLimits);
     };
   }, [articles]);
 
+  useEffect(() => {
+    const viewport = viewportRef.current;
+
+    if (!viewport || !isMobile) {
+      return;
+    }
+
+    const handleScroll = () => {
+      syncMobileScrollState(viewport);
+    };
+
+    viewport.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      viewport.removeEventListener('scroll', handleScroll);
+    };
+  }, [isMobile, articles]);
+
+  const slideStep = isMobile ? MOBILE_SLIDE_STEP : DESKTOP_SLIDE_STEP;
+
   const handlePrev = () => {
-    setOffset((prev) => Math.max(prev - SLIDE_STEP, 0));
+    const viewport = viewportRef.current;
+
+    if (!viewport) {
+      return;
+    }
+
+    if (isMobile) {
+      const targetLeft = Math.max(viewport.scrollLeft - slideStep, 0);
+
+      viewport.scrollTo({
+        left: targetLeft,
+        behavior: 'smooth',
+      });
+
+      requestAnimationFrame(() => {
+        syncMobileScrollState(viewport);
+      });
+
+      setTimeout(() => {
+        syncMobileScrollState(viewport);
+      }, 350);
+
+      return;
+    }
+
+    setOffset((prev) => Math.max(prev - slideStep, 0));
   };
 
   const handleNext = () => {
-    setOffset((prev) => Math.min(prev + SLIDE_STEP, maxOffset));
-  };
+    const viewport = viewportRef.current;
 
-  const isPrevDisabled = offset <= 0;
-  const isNextDisabled = offset >= maxOffset;
+    if (!viewport) {
+      return;
+    }
+
+    if (isMobile) {
+      const currentMax = Math.max(viewport.scrollWidth - viewport.clientWidth, 0);
+      const targetLeft = Math.min(viewport.scrollLeft + slideStep, currentMax);
+
+      viewport.scrollTo({
+        left: targetLeft,
+        behavior: 'smooth',
+      });
+
+      requestAnimationFrame(() => {
+        syncMobileScrollState(viewport);
+      });
+
+      setTimeout(() => {
+        syncMobileScrollState(viewport);
+      }, 350);
+
+      return;
+    }
+
+    setOffset((prev) => Math.min(prev + slideStep, maxOffset));
+  };
+  
+  const isPrevDisabled = offset <= 2;
+  const isNextDisabled = offset >= maxOffset - 2;
 
   return (
     <section className="news" id="news">
@@ -92,7 +200,10 @@ export const News = () => {
         <div className="news__top">
           <div className="news__heading">
             <h2 className="news__title">Current news from the world of finance</h2>
-            <p className="news__description">We update the news feed every 15 minutes. You can learn more by clicking on the news you are interested in.</p>
+            <p className="news__description">
+              We update the news feed every 15 minutes. You can learn more by clicking
+              on the news you are interested in.
+            </p>
           </div>
         </div>
 
@@ -108,7 +219,7 @@ export const News = () => {
               <div
                 className="news__track"
                 ref={trackRef}
-                style={{ transform: `translateX(-${offset}px)` }}
+                style={!isMobile ? { transform: `translateX(-${offset}px)` } : undefined}
               >
                 {articles.map((article) => (
                   <a
