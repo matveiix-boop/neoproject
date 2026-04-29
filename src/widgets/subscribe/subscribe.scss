@@ -133,3 +133,41 @@
     }
   }
 }
+.subscribe__success {
+  width: min(100%, 525px);
+  margin: 54px auto 0;
+  padding: 28px 20px;
+  border-radius: 18px;
+  background-color: #fafafa;
+  color: #1c1c1e;
+  font-size: 20px;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(34, 35, 45, 0.04);
+}
+
+.subscribe__error {
+  margin: 16px 0 0;
+  color: #ff5631;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.subscribe__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.subscribe__loader {
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: subscribe-spin 0.8s linear infinite;
+}
+
+@keyframes subscribe-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

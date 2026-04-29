@@ -1,0 +1,74 @@
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  border-bottom: 1px solid #7a7b85;
+  overflow: visible;
+
+  &__button {
+    position: relative;
+    flex: 0 0 auto;
+    padding: 0 0 13px;
+    border: 0;
+    background: transparent;
+    color: #5f6478;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: left;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background-color: transparent;
+    }
+
+    &:hover,
+    &--active {
+      color: #1f2028;
+    }
+
+    &--active::after {
+      background-color: #1f2028;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+    border-bottom: 0;
+    overflow: visible;
+  }
+
+  .tabs__button {
+    width: 100%;
+    min-height: 42px;
+    padding: 0 0 10px;
+    border-bottom: 1px solid #7a7b85;
+    font-size: 14px;
+    white-space: normal;
+
+    &::after {
+      bottom: -1px;
+    }
+  }
+}
+
+@media (max-width: 390px) {
+  .tabs {
+    column-gap: 12px;
+  }
+
+  .tabs__button {
+    font-size: 13px;
+  }
+}

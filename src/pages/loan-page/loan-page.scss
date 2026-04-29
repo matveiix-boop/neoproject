@@ -1,0 +1,707 @@
+@use '@/app/styles/mixins' as *;
+
+.loan-page {
+  padding-top: 32px;
+}
+
+.loan-hero {
+  &__card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 48px;
+    align-items: center;
+    min-height: 390px;
+    padding: 48px 40px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, #d7e1f0 0%, #f7ead9 100%);
+    box-shadow: 0 2px 4px rgba(40, 42, 56, 0.16);
+  }
+
+  &__title {
+    max-width: 760px;
+    margin: 0;
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+  }
+
+  &__description {
+    max-width: 520px;
+    margin: 48px 0 0;
+    color: rgba(45, 55, 72, 1);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  &__features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 52px;
+    margin: 30px 0 0;
+  }
+
+  &__feature {
+    display: grid;
+    gap: 6px;
+  }
+
+  &__feature-title {
+    color: rgba(61, 61, 61, 1);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  &__feature-text {
+    margin: 0;
+    color: rgba(61, 61, 61, 1);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  &__button.button {
+    min-height: 50px;
+    margin-top: 28px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+}
+
+.credit-card {
+  position: relative;
+  width: 320px;
+  height: 190px;
+  justify-self: center;
+  overflow: hidden;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(31, 216, 255, 0.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 24% 75%, rgba(178, 53, 221, 0.95) 0 2px, transparent 3px),
+    radial-gradient(circle at 65% 70%, rgba(33, 183, 255, 0.85) 0 2px, transparent 3px),
+    linear-gradient(130deg, #0a0a11 0%, #171229 45%, #050506 100%);
+  background-size: 20px 20px, 22px 22px, 18px 18px, 100% 100%;
+  color: #ffffff;
+  box-shadow: 0 16px 34px rgba(11, 12, 24, 0.22);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -40px -90px auto auto;
+    width: 360px;
+    height: 220px;
+    border-radius: 50%;
+    border: 20px solid rgba(32, 206, 255, 0.52);
+    transform: rotate(22deg);
+    filter: blur(2px);
+  }
+
+  &__number {
+    position: absolute;
+    left: 32px;
+    top: 76px;
+    font-size: 22px;
+    letter-spacing: 0.03em;
+  }
+
+  &__name {
+    position: absolute;
+    left: 32px;
+    bottom: 42px;
+    font-size: 14px;
+  }
+
+  &__valid {
+    position: absolute;
+    right: 82px;
+    bottom: 28px;
+    font-size: 10px;
+    line-height: 1.15;
+  }
+
+  &__circle {
+    position: absolute;
+    right: 32px;
+    bottom: 28px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: rgba(218, 180, 190, 0.68);
+  }
+}
+
+.loan-tabs {
+  padding-top: 50px;
+
+  &__about-grid,
+  &__cashback-grid {
+    display: grid;
+    gap: 40px;
+    margin-top: 36px;
+  }
+
+  // About card: первый ряд 3 карточки, второй ряд 2 карточки 50/50
+  &__about-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  // Cashback: 2 строки по 3 одинаковые карточки
+  &__cashback-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  &__rates {
+    max-width: 960px;
+    margin-top: 34px;
+  }
+
+  &__rate {
+    display: grid;
+    grid-template-columns: minmax(240px, 300px) 1fr;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #8f929d;
+    color: #000000;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  &__rate-name {
+    font-weight: 500;
+  }
+
+  &__rate-value {
+    font-weight: 500;
+    white-space: pre-line;
+    color: rgba(67, 67, 67, 1);
+  }
+
+  &__faq {
+    margin-top: 34px;
+  }
+
+  &__faq-title {
+    margin: 0 0 32px;
+    color: #1f2028;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  &__faq .accordion + &__faq-title {
+    margin-top: 42px;
+  }
+}
+
+.loan-info-card {
+  min-height: 180px;
+  padding: 34px 32px 30px;
+  border-radius: 28px;
+  background-color: #e7e7e9;
+  box-shadow: 0 2px 5px rgba(26, 27, 35, 0.18);
+
+  &--accent {
+    background-color: #9fb0c6;
+  }
+
+  &__icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 34px;
+    object-fit: contain;
+  }
+
+  &__title {
+    margin: 0;
+    color: rgba(0, 0, 0, 1);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  &__text {
+    margin: 28px 0 0;
+    color: rgba(0, 0, 0, 1);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+}
+
+// Важно: эти nth-child применяются только к About card,
+// чтобы не ломать сетку Cashback.
+.loan-tabs__about-grid {
+  .loan-info-card {
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3) {
+      grid-column: span 2;
+    }
+
+    &:nth-child(4),
+    &:nth-child(5) {
+      grid-column: span 3;
+    }
+  }
+}
+
+// Cashback должен быть ровно 3 колонки и 2 строки.
+.loan-tabs__cashback-grid {
+  .loan-info-card {
+    grid-column: auto;
+    width: 100%;
+    min-height: 150px;
+  }
+
+  .loan-info-card__title {
+    margin-top: 34px;
+  }
+
+  .loan-info-card__text {
+    margin-top: 0;
+  }
+}
+
+.loan-process {
+  padding-top: 92px;
+
+  &__title {
+    margin: 0;
+    color: #000000;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 52px;
+    margin-top: 34px;
+    counter-reset: process;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+
+  &__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+    color: #000000;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  &__text {
+    grid-column: 1 / -1;
+    margin: 6px 0 0;
+    color: #000000;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+}
+
+.prescoring {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(300px, 1fr);
+  gap: 0 38px;
+  margin-top: 64px;
+  padding: 32px;
+  border-radius: 28px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 5px rgba(26, 27, 35, 0.18);
+
+  // Вертикальный разделитель только между Select amount и Summary
+  &::before {
+    content: '';
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    width: 1px;
+    border-left: 1px dashed #c9c9cf;
+  }
+
+  &__top {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  &__title-wrap {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  &__title {
+    margin: 0;
+    color: #000000;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  &__step {
+    margin-top: 8px;
+    color: #000000;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &__amount-card {
+    margin-top: 24px;
+    padding: 24px;
+    border: 1px solid #5b35d5;
+    border-radius: 8px;
+  }
+
+  &__amount-input.field-input {
+    min-height: 42px;
+    padding-left: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+    font-weight: 500;
+
+    &:focus {
+      border: 0;
+      box-shadow: none;
+    }
+  }
+
+  &__range {
+    display: block;
+    width: 100%;
+    height: 24px;
+    margin: 6px 0 5px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: linear-gradient(
+      to right,
+      #5b35d5 0%,
+      #5b35d5 var(--range-progress, 0%),
+      #b8b8c0 var(--range-progress, 0%),
+      #b8b8c0 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    background-position: center;
+
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 24px;
+      background: transparent;
+      border: 0;
+    }
+
+    &::-webkit-slider-thumb {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      border-radius: 50%;
+      background-color: #5b35d5;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    &::-moz-range-track {
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background-color: #b8b8c0;
+    }
+
+    &::-moz-range-progress {
+      height: 2px;
+      border-radius: 999px;
+      background-color: #5b35d5;
+    }
+
+    &::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      border-radius: 50%;
+      background-color: #5b35d5;
+      cursor: pointer;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #5b35d5;
+      outline-offset: 4px;
+    }
+  }
+
+  &__limits {
+    display: flex;
+    justify-content: space-between;
+    color: #6b6d76;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  &__summary {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  &__summary-title {
+    margin: 0;
+    color: #000000;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &__summary-amount {
+    margin: 18px 0 12px;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  &__contacts {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 32px;
+  }
+
+  &__contacts-title {
+    margin: 0 0 24px;
+    color: #000000;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 28px;
+  }
+
+  &__message {
+    margin: 0;
+    color: #2c2d35;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &__button.button {
+    min-width: 164px;
+    min-height: 50px;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  &__button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  &__loader {
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: prescoring-spin 0.8s linear infinite;
+  }
+}
+
+@keyframes prescoring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@include desktop {
+  .prescoring {
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@include tablet {
+  .loan-hero {
+    &__card {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+
+    &__title {
+      font-size: 40px;
+    }
+  }
+
+  .loan-tabs {
+    &__about-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    // Cashback на tablet оставляем 3 колонки,
+    // чтобы не превращался в один столбец.
+    &__cashback-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+
+  .loan-tabs__about-grid {
+    .loan-info-card {
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4),
+      &:nth-child(5) {
+        grid-column: auto;
+      }
+    }
+  }
+
+  .loan-process {
+    &__list {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  .prescoring {
+    grid-template-columns: 1fr;
+    gap: 28px;
+
+    &::before {
+      display: none;
+    }
+
+    &__top,
+    &__summary,
+    &__contacts,
+    &__actions {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    &__contacts {
+      margin-top: 0;
+    }
+  }
+}
+
+@include mobile {
+  .loan-page {
+    padding-top: 24px;
+  }
+
+  .loan-hero {
+    &__card {
+      padding: 32px 20px;
+    }
+
+    &__title {
+      font-size: 32px;
+    }
+
+    &__description {
+      margin-top: 28px;
+      font-size: 14px;
+    }
+
+    &__features {
+      gap: 22px;
+    }
+  }
+
+  .credit-card {
+    width: 270px;
+    height: 162px;
+
+    &__number {
+      left: 22px;
+      top: 68px;
+      font-size: 17px;
+    }
+  }
+
+  .loan-tabs {
+    &__about-grid,
+    &__cashback-grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__rate {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+
+  .loan-tabs__about-grid {
+    .loan-info-card {
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4),
+      &:nth-child(5) {
+        grid-column: auto;
+      }
+    }
+  }
+
+  .loan-info-card {
+    padding: 26px 22px;
+
+    &__title {
+      font-size: 24px;
+    }
+  }
+
+  .prescoring {
+    padding: 24px 16px;
+
+    &__title-wrap {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+}

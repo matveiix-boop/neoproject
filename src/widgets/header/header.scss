@@ -35,10 +35,17 @@
     font-size: 16px;
     font-weight: 700;
     color: #1D1929;
+    text-decoration: none;
   }
-   &__navigation-link:hover {
+
+  &__navigation-link:hover {
     color: #B4387A;
-   }
+  }
+
+  &__navigation-link--active,
+  &__navigation-link--active:hover {
+    color: rgba(178, 163, 95, 1);
+  }
 
   &__button.button {
     min-height: 50px;
@@ -71,7 +78,6 @@
     &__container {
       gap: 14px;
     }
-
 
     &__navigation-list {
       gap: 14px 18px;

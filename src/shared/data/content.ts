@@ -5,10 +5,10 @@ import cardImage4 from '@/shared/assets/images/card-4.png';
 import checkIcon from '@/shared/assets/images/check.svg';
 
 export const navigationItems = [
-  { label: 'Credit card', href: '#hero' },
-  { label: 'Product', href: '#features' },
-  { label: 'Account', href: '#exchange' },
-  { label: 'Resources', href: '#news' },
+  { label: 'Credit card', href: '/loan' },
+  { label: 'Product', href: '/#features' },
+  { label: 'Account', href: '/#exchange' },
+  { label: 'Resources', href: '/#news' },
 ];
 
 export const heroCards = [

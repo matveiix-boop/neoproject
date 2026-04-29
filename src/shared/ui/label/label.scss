@@ -1,0 +1,12 @@
+.field-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #1f2028;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  &__required {
+    color: #ff5631;
+  }
+}

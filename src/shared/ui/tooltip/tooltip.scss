@@ -1,0 +1,39 @@
+.tooltip {
+  position: relative;
+  display: inline-flex;
+
+  &__trigger {
+    display: inline-flex;
+    outline: 0;
+  }
+
+  &__content {
+    position: absolute;
+    left: 0;
+    bottom: -46px;
+    z-index: 5;
+    width: max-content;
+    max-width: 220px;
+    padding: 8px 10px;
+    background-color: #3d3d3d;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.25;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0.2s ease;
+  }
+
+  &:hover &__content,
+  &__trigger:focus + &__content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
