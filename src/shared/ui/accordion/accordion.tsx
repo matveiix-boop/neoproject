@@ -14,25 +14,17 @@ type AccordionProps = {
 };
 
 export const Accordion = ({ items, className = '' }: AccordionProps) => {
-  const [openItemIds, setOpenItemIds] = useState<string[]>([]);
+  const [openItemId, setOpenItemId] = useState<string | null>(null);
   const classes = ['accordion', className].filter(Boolean).join(' ');
 
   const handleToggle = (itemId: string) => {
-    setOpenItemIds((currentOpenItemIds) => {
-      const isAlreadyOpen = currentOpenItemIds.includes(itemId);
-
-      if (isAlreadyOpen) {
-        return currentOpenItemIds.filter((openItemId) => openItemId !== itemId);
-      }
-
-      return [...currentOpenItemIds, itemId];
-    });
+    setOpenItemId((currentOpenItemId) => (currentOpenItemId === itemId ? null : itemId));
   };
 
   return (
     <div className={classes}>
       {items.map((item) => {
-        const isOpen = openItemIds.includes(item.id);
+        const isOpen = item.id === openItemId;
         const contentId = `${item.id}-content`;
 
         return (
