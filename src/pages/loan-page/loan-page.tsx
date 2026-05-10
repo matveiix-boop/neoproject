@@ -1,6 +1,12 @@
-import { ChangeEvent, FormEvent, useMemo, useState, type CSSProperties } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { sendPrescoringApplication, type PrescoringApplication } from '@/shared/api/bank-api';
+import {
+  applyLoanOffer,
+  sendPrescoringApplication,
+  type LoanOffer,
+  type PrescoringApplication,
+} from '@/shared/api/bank-api';
 import { Accordion, type AccordionItem } from '@/shared/ui/accordion/accordion';
 import { Button } from '@/shared/ui/button/button';
 import { Container } from '@/shared/ui/container/container';
@@ -10,11 +16,22 @@ import { Label } from '@/shared/ui/label/label';
 import { Select } from '@/shared/ui/select/select';
 import { Tabs } from '@/shared/ui/tabs/tabs';
 import { Tooltip } from '@/shared/ui/tooltip/tooltip';
+import { Loader } from '@/shared/ui/loader/loader';
+import {
+  getCurrentRoute,
+  getCurrentStep,
+  getLoanButtonText,
+  isApplicationDenied,
+} from '@/entities/application/lib/application-flow';
+import { useApplicationStore } from '@/entities/application/model/application-store';
 import bagIcon from '@/shared/assets/images/bag_duotone.svg';
 import calendarIcon from '@/shared/assets/images/calendar_duotone.svg';
 import clockIcon from '@/shared/assets/images/clock_duotone.svg';
 import creditCardIcon from '@/shared/assets/images/credit_card_duotone.svg';
 import moneyIcon from '@/shared/assets/images/money_duotone.svg';
+import surpriseImage from '@/shared/assets/images/surprise-image.png';
+import checkFillIcon from '@/shared/assets/images/check-fill.svg';
+import closeRoundFillIcon from '@/shared/assets/images/close-round-fill.svg';
 import { Footer } from '@/widgets/footer/footer';
 import { Header } from '@/widgets/header/header';
 
@@ -299,6 +316,7 @@ const hasVisibleValue = (name: FormFieldName, values: FormValues) => {
 };
 
 const PrescoringForm = () => {
+  const { saveOffers } = useApplicationStore();
   const [values, setValues] = useState<FormValues>(initialValues);
   const [touched, setTouched] = useState<Partial<Record<FormFieldName, boolean>>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -408,8 +426,9 @@ const PrescoringForm = () => {
 
     try {
       setIsLoading(true);
-      await sendPrescoringApplication(payload);
-      setFormMessage('Your application has been sent successfully');
+      const offers = await sendPrescoringApplication(payload);
+      saveOffers(offers);
+      setFormMessage(null);
     } catch (error) {
       console.error(error);
       setFormMessage('Failed to send application. Please try again later.');
@@ -605,16 +624,157 @@ const PrescoringForm = () => {
       <div className="prescoring__actions">
         {formMessage && <p className="prescoring__message">{formMessage}</p>}
         <Button className="prescoring__button" type="submit" disabled={isLoading}>
-          {isLoading ? <span className="prescoring__loader" aria-label="Loading" /> : 'Continue'}
+          {isLoading ? <Loader /> : 'Continue'}
         </Button>
       </div>
     </form>
   );
 };
 
+
+const formatMoney = (value: number) => {
+  return `${Math.round(value).toLocaleString('ru-RU')} ₽`;
+};
+
+const OfferCards = () => {
+  const { state, selectOffer } = useApplicationStore();
+  const [loadingOfferId, setLoadingOfferId] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const currentApplication = state.currentApplicationId
+    ? state.applications[String(state.currentApplicationId)]
+    : undefined;
+
+  if (isApplicationDenied(currentApplication)) {
+    return (
+      <div className="offer-message offer-message--denied" id="offers">
+        <h2 className="offer-message__title">Your application has been denied</h2>
+        <p className="offer-message__text">
+          You can fill out a new application and choose another credit offer.
+        </p>
+      </div>
+    );
+  }
+
+  if (!currentApplication?.offers.length || currentApplication.selectedOffer) {
+    if (currentApplication?.selectedOffer && getCurrentStep(currentApplication) !== 'loan') {
+      return (
+        <div className="offer-message" id="offers">
+          <h2 className="offer-message__title">The preliminary decision has been sent to your email.</h2>
+          <p className="offer-message__text">
+            Follow the link in the email or click &quot;Continue registration&quot; in the banner to continue your
+            application.
+          </p>
+        </div>
+      );
+    }
+
+    return null;
+  }
+
+  const handleApplyOffer = async (offer: LoanOffer) => {
+    const loadingId = `${offer.applicationId}-${offer.rate}-${offer.monthlyPayment}`;
+    setLoadingOfferId(loadingId);
+    setMessage(null);
+    setError(null);
+
+    try {
+      await applyLoanOffer(offer);
+      selectOffer(offer.applicationId, offer);
+      setMessage('The preliminary decision has been sent to your email.');
+    } catch (applyError) {
+      console.error(applyError);
+      setError('Failed to choose offer. Please try again later.');
+    } finally {
+      setLoadingOfferId(null);
+    }
+  };
+
+  return (
+    <section className="offers" id="offers" aria-labelledby="offers-title">
+      <h2 className="offers__title" id="offers-title">
+        Choose one of the offers
+      </h2>
+      <p className="offers__subtitle">Offers are shown from the least profitable to the most profitable.</p>
+
+      <div className="offers__grid">
+        {currentApplication.offers.map((offer) => {
+          const loadingId = `${offer.applicationId}-${offer.rate}-${offer.monthlyPayment}`;
+
+          return (
+            <article className="offer-card" key={loadingId}>
+              <img className="offer-card__image" src={surpriseImage} alt="" aria-hidden="true" />
+
+              <div className="offer-card__details">
+                <p className="offer-card__text">Requested amount: {formatMoney(offer.requestedAmount)}</p>
+                <p className="offer-card__text">Total amount: {formatMoney(offer.totalAmount)}</p>
+                <p className="offer-card__text">For {offer.term} months</p>
+                <p className="offer-card__text">Monthly payment: {formatMoney(offer.monthlyPayment)}</p>
+                <p className="offer-card__text">Your rate: {offer.rate}%</p>
+                <p className="offer-card__text offer-card__text--icon">
+                  Insurance included
+                  <img
+                    className="offer-card__status-icon"
+                    src={offer.isInsuranceEnabled ? checkFillIcon : closeRoundFillIcon}
+                    alt={offer.isInsuranceEnabled ? 'Yes' : 'No'}
+                  />
+                </p>
+                <p className="offer-card__text offer-card__text--icon">
+                  Salary client
+                  <img
+                    className="offer-card__status-icon"
+                    src={offer.isSalaryClient ? checkFillIcon : closeRoundFillIcon}
+                    alt={offer.isSalaryClient ? 'Yes' : 'No'}
+                  />
+                </p>
+              </div>
+              <Button
+                className="offer-card__button"
+                type="button"
+                disabled={Boolean(loadingOfferId)}
+                onClick={() => handleApplyOffer(offer)}
+              >
+                {loadingOfferId === loadingId ? <Loader /> : 'Select'}
+              </Button>
+            </article>
+          );
+        })}
+      </div>
+
+      {message && <p className="offers__message">{message}</p>}
+      {error && <p className="offers__error">{error}</p>}
+    </section>
+  );
+};
+
 const LoanHero = () => {
+  const navigate = useNavigate();
+  const { state, refreshApplication } = useApplicationStore();
+  const currentApplicationId = state.currentApplicationId;
+  const currentApplication = currentApplicationId
+    ? state.applications[String(currentApplicationId)]
+    : undefined;
+
+  useEffect(() => {
+    if (!currentApplicationId || !currentApplication?.selectedOffer) {
+      return;
+    }
+
+    refreshApplication(currentApplicationId).catch((error) => console.error(error));
+  }, [currentApplication?.selectedOffer, currentApplicationId, refreshApplication]);
+
   const handleApplyClick = () => {
-    document.getElementById('prescoring')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const isDenied = isApplicationDenied(currentApplication);
+
+    if (currentApplication && !isDenied && getCurrentStep(currentApplication) !== 'loan') {
+      navigate(getCurrentRoute(currentApplication));
+      return;
+    }
+
+    document.getElementById(currentApplication?.offers.length && !isDenied ? 'offers' : 'prescoring')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   };
 
   return (
@@ -652,7 +812,7 @@ const LoanHero = () => {
             </div>
 
             <Button className="loan-hero__button" type="button" onClick={handleApplyClick}>
-              Apply for card
+              {getLoanButtonText(currentApplication)}
             </Button>
           </div>
 
@@ -764,6 +924,24 @@ const Process = () => {
   );
 };
 
+const LoanApplicationSection = () => {
+  const { state } = useApplicationStore();
+  const currentApplication = state.currentApplicationId
+    ? state.applications[String(state.currentApplicationId)]
+    : undefined;
+  const shouldShowPrescoring =
+    !currentApplication ||
+    isApplicationDenied(currentApplication) ||
+    (!currentApplication.offers.length && !currentApplication.selectedOffer);
+
+  return (
+    <Container>
+      {shouldShowPrescoring && <PrescoringForm />}
+      <OfferCards />
+    </Container>
+  );
+};
+
 export const LoanPage = () => {
   return (
     <>
@@ -772,9 +950,7 @@ export const LoanPage = () => {
         <LoanHero />
         <LoanTabsSection />
         <Process />
-        <Container>
-          <PrescoringForm />
-        </Container>
+        <LoanApplicationSection />
       </main>
       <Footer />
     </>

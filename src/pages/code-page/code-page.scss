@@ -1,0 +1,133 @@
+.code-page {
+  min-height: 390px;
+  padding: 132px 0 120px;
+
+  &__card {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+
+  &__title {
+    margin: 0;
+    color: #1f2028;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+  }
+
+  &__form {
+    display: grid;
+    justify-items: center;
+    margin-top: 32px;
+  }
+
+  &__inputs {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  &__input {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 1px solid #3182ce;
+    border-radius: 6px;
+    background-color: #f1f0f8;
+    color: #1f2028;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &::placeholder {
+      color: #808080;
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    &:focus {
+      border-color: #3182ce;
+      box-shadow: 0 0 0 1px #3182ce;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+  }
+
+  &__error {
+    margin: 18px 0 0;
+    color: #ff5631;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .loader {
+    margin-top: 18px;
+    border-color: rgba(0, 60, 255, 0.25);
+    border-top-color: #003cff;
+  }
+
+  &__home-button.button {
+    min-width: 192px;
+    min-height: 50px;
+    margin-top: 0;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+}
+
+.code-page--success {
+  min-height: 532px;
+  padding: 38px 0 80px;
+}
+
+.code-page__success {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.code-page__success-image {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 34px;
+}
+
+.code-page__success-title {
+  max-width: 1000px;
+  margin: 0;
+  color: #1f2028;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+}
+
+.code-page__success-text {
+  margin: 32px 0 0;
+  color: #4f5665;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.code-page__home-button.button {
+  min-width: 260px;
+  min-height: 50px;
+  margin-top: 32px;
+  border-radius: 15px;
+  font-size: 16px;
+}

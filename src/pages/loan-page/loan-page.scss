@@ -705,3 +705,133 @@
     }
   }
 }
+.offers {
+  margin-top: 44px;
+
+  &__title,
+  &__subtitle {
+    display: none;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 40px;
+  }
+
+  &__message,
+  &__error {
+    margin: 24px 0 0;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &__message {
+    color: #2c2d35;
+  }
+
+  &__error {
+    color: #c13b3b;
+  }
+}
+
+.offer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
+  padding: 24px 20px 28px;
+  border-radius: 14px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(40, 42, 56, 0.16);
+  text-align: center;
+
+  &__image {
+    display: block;
+    width: 150px;
+    height: 120px;
+    object-fit: contain;
+  }
+
+  &__details {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  &__text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
+    color: #1f2028;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  &__text--icon {
+    min-height: 18px;
+  }
+
+  &__status-icon {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+  }
+
+  &__button.button {
+    min-width: 128px;
+    min-height: 40px;
+    margin-top: 24px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+}
+
+.offer-message {
+  margin-top: 44px;
+  padding: 32px;
+  border-radius: 28px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(26, 27, 35, 0.18);
+  text-align: center;
+
+  &__title {
+    margin: 0;
+    color: #1f2028;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  &__text {
+    max-width: 640px;
+    margin: 24px auto 0;
+    color: #4d5668;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 1300px) {
+  .offers {
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .offers {
+    padding: 24px 16px;
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

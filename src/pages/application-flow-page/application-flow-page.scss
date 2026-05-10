@@ -1,0 +1,136 @@
+.application-flow-page {
+  min-height: 500px;
+  padding: 62px 0 0;
+  background-color: #f1f0f8;
+
+  &__card {
+    padding: 34px 32px 32px;
+    border-radius: 28px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(26, 27, 35, 0.18);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 112px;
+    margin-bottom: 34px;
+  }
+
+  &__title {
+    margin: 0;
+    color: #1f2028;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+  }
+
+  &__step {
+    color: #1f2028;
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  &__loader {
+    display: grid;
+    min-height: 240px;
+    place-items: center;
+    color: #1f2028;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  &__error {
+    margin: 0 0 24px;
+    color: #c13b3b;
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
+
+.flow-form {
+  &__section-title {
+    margin: 28px 0 24px;
+    color: #1f2028;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px 16px;
+  }
+
+  &__grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 18px;
+  }
+
+  &__field--wide {
+    grid-column: span 2;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  &__button.button {
+    min-width: 148px;
+    min-height: 50px;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  &__message {
+    align-self: center;
+    margin: 0;
+    color: #c13b3b;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 920px) {
+  .application-flow-page {
+    &__header {
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+  }
+
+  .flow-form {
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .application-flow-page {
+    padding-top: 40px;
+
+    &__card {
+      padding: 28px 18px;
+    }
+  }
+
+  .flow-form {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__field--wide {
+      grid-column: auto;
+    }
+
+    &__actions {
+      flex-direction: column;
+    }
+  }
+}

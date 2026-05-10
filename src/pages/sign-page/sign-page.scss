@@ -1,0 +1,83 @@
+.sign-page {
+  min-height: 500px;
+  padding: 126px 0 68px;
+
+  &__content {
+    padding: 0;
+  }
+
+  &__header.application-flow-page__header {
+    margin-bottom: 30px;
+  }
+
+  &__text {
+    max-width: 1190px;
+    margin: 0;
+    color: #4d5668;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+  }
+
+  &__document {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 34px;
+    color: #1f2028;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  &__document-icon {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 76px;
+    margin-top: 32px;
+  }
+
+  &__button.button {
+    min-width: 148px;
+    min-height: 40px;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  &__button:disabled {
+    cursor: not-allowed;
+  }
+
+  &__message {
+    margin: 24px 0 0;
+    color: #c13b3b;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: right;
+  }
+}
+
+@media (max-width: 700px) {
+  .sign-page {
+    padding-top: 70px;
+
+    &__actions {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    &__text {
+      font-size: 16px;
+    }
+  }
+}
