@@ -22,9 +22,10 @@ export const ApplicationStepGuard = ({ step, children }: ApplicationStepGuardPro
   const id = applicationId ? Number(applicationId) : NaN;
   const isValidId = Number.isInteger(id) && id > 0;
   const application = isValidId ? state.applications[String(id)] : undefined;
+  const hasStoredApplication = Boolean(application);
 
   useEffect(() => {
-    if (!isValidId) {
+    if (!isValidId || !hasStoredApplication) {
       setIsChecking(false);
       setIsMissingApplication(true);
       return;
@@ -39,9 +40,6 @@ export const ApplicationStepGuard = ({ step, children }: ApplicationStepGuardPro
     refreshApplication(id)
       .catch((error) => {
         console.error(error);
-        if (!isCancelled) {
-          setIsMissingApplication(true);
-        }
       })
       .finally(() => {
         if (!isCancelled) {
@@ -52,7 +50,7 @@ export const ApplicationStepGuard = ({ step, children }: ApplicationStepGuardPro
     return () => {
       isCancelled = true;
     };
-  }, [id, isValidId, refreshApplication, setCurrentApplication]);
+  }, [id, isValidId, hasStoredApplication, refreshApplication, setCurrentApplication]);
 
   if (isChecking) {
     return (
